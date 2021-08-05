@@ -11,14 +11,21 @@ class CreateAccount extends Migration
      *
      * @return void
      */
+
     public function up()
     {
-        Schema::create('account', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('name');
+            $table->string('description');
+            $table->string('iban')->unique();
+            $table->decimal('balance', 10, 2);
+            $table->decimal('maintenance_price', 10, 2);
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *
@@ -26,6 +33,6 @@ class CreateAccount extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account');
+        Schema::dropIfExists('accounts');
     }
 }
