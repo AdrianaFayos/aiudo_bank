@@ -13,8 +13,13 @@ class CreateLoan extends Migration
      */
     public function up()
     {
-        Schema::create('loan', function (Blueprint $table) {
+        Schema::create('loans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('account_id')->references('id')->on('accounts');
+            $table->decimal('loan_money', 10, 2);
+            $table->decimal('paid_money', 10, 2);
+            $table->date('start_date');
+            $table->date('final_date');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateLoan extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loan');
+        Schema::dropIfExists('loans');
     }
 }
