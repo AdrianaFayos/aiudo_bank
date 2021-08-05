@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Loan;
+use App\Models\Account;
 use Illuminate\Http\Request;
 
 class LoanController extends Controller
@@ -48,11 +49,28 @@ class LoanController extends Controller
             ]);
     
             if($loan){
-    
-                return response() ->json([
-                    'success' => true,
-                    'data' => $loan
-                ], 200);
+
+                $account = Account::where('id', '=', $loan->account_id)->get();
+                $total = $account->balance + $loan->loan_money ;
+
+                $updated = $account->update([
+                    'balance' => $total
+                ]);
+
+                if($updated){
+
+                    return response() ->json([
+                        'success' => true,
+                        'data' => $loan
+                    ], 200);
+
+                } else {
+                    return response() ->json([
+                        'success' => false,
+                        'message' => 'Loan can not be created',
+                    ], 500);
+                }
+
     
             }
     
@@ -77,9 +95,34 @@ class LoanController extends Controller
      * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function show(Loan $loan)
+    public function show()
     {
-        //
+        $user = auth()->user();
+
+        $account = Account::where('user_id', '=', $user->id)->get();
+
+        $loan = Loan::where('account_id', '=', $account[0]->id)->get();
+
+        if(!$loan){
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'Accounts not found',
+            ], 400);
+
+        } else if ($loan->isEmpty()) {
+            
+            return response() ->json([
+                'success' => false,
+                'message' => 'Accounts not found',
+                ], 400);
+
+        } 
+
+        return response() ->json([
+            'success' => true,
+            'data' => $loan,
+        ], 200);
     }
 
     /**
