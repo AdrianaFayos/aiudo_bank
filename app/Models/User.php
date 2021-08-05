@@ -11,6 +11,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function account () {
+        return $this -> hasMany(Account::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,8 +22,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'lastname',
         'email',
         'password',
+        'dni',
+        'phone',
+        'adress',
+        'birthday'
     ];
 
     /**
