@@ -30,4 +30,6 @@ Route::middleware('auth:api')->group(function(){
    
     // Create, delete or find accounts enpoints 
     Route::resource('account', AccountController::class);
+    Route::get('account/user', [AccountController::class, 'show']);
+
 });

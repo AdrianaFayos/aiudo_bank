@@ -82,9 +82,32 @@ class AccountController extends Controller
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function show(Account $account)
+    public function show()
     {
-        //
+        $user = auth()->user();
+
+        $account = Account::where('user_id', '=', $user->id)->get();
+
+        if(!$user){
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'Accounts not found',
+            ], 400);
+
+        } else if ($account->isEmpty()) {
+            
+            return response() ->json([
+                'success' => false,
+                'message' => 'Accounts not found',
+                ], 400);
+
+        } 
+
+        return response() ->json([
+            'success' => true,
+            'data' => $account,
+        ], 200);
     }
 
     /**
