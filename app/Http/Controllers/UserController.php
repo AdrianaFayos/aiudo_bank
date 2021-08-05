@@ -14,7 +14,25 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        $users = User::all();
+
+        if($user->id === 1){
+
+            return response() ->json([
+                'success' => true,
+                'data' => $users,
+            ]);
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 
     /**
