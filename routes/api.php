@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PassportAuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -26,5 +27,7 @@ Route::middleware('auth:api')->group(function(){
     // Create, update, delete or find users enpoints 
     Route::resource('users', UserController::class);
     Route::get('users/profile', [UserController::class, 'show']);
-    
+   
+    // Create, delete or find accounts enpoints 
+    Route::resource('account', AccountController::class);
 });

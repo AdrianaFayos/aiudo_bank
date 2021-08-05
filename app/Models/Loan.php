@@ -18,12 +18,11 @@ class Loan extends Model
     }
 
     protected $fillable = [
-        'user_id',
-        'name',
-        'description',
-        'iban',
-        'balance',
-        'maintenance_price',
+        'account_id',
+        'loan_money',
+        'paid_money',
+        'start_date',
+        'final_date',
     ];
 
 

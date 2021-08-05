@@ -22,10 +22,11 @@ class Account extends Model
     }
 
     protected $fillable = [
-        'account_id',
-        'loan_money',
-        'paid_money',
-        'start_date',
-        'final_date',
+        'user_id',
+        'name',
+        'description',
+        'iban',
+        'balance',
+        'maintenance_price',
     ];
 }
