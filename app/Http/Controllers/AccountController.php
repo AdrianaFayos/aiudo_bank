@@ -14,7 +14,25 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        $accounts = Account::all();
+
+        if($user->id === 1){
+
+            return response() ->json([
+                'success' => true,
+                'data' => $accounts,
+            ]);
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 
     /**
@@ -128,8 +146,35 @@ class AccountController extends Controller
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Account $account)
+    public function destroy($id)
     {
-        //
+        $user = auth()->user();
+
+        if($user->id === 1){
+
+            $account = Account::where('id', '=', $id);
+
+            if($account -> delete()) {
+                return response() ->json([
+                    'success' => true,
+                    'message' => 'Account deleted',
+                ], 200);
+                
+            } else {
+                return response() ->json([
+                    'success' => false,
+                    'message' => 'Account can not be deleted',
+                ], 500);
+            }
+     
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 }
