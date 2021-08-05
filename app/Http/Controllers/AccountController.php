@@ -135,9 +135,43 @@ class AccountController extends Controller
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Account $account)
+
+    public function update(Request $request, $id)
     {
-        //
+        $user = auth()->user();
+
+        $account = Account::where('id', '=', $id)->where('user_id', '=', $user->id);
+        
+        if(!$account){
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'Account not found',
+            ], 400);
+
+        }
+
+        else {
+
+            $updated = $account->update([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+            ]);
+    
+            if($updated){
+                return response() ->json([
+                    'success' => true,
+                ]);
+            } else {
+                return response() ->json([
+                    'success' => false,
+                    'message' => 'Account can not be updated',
+                ], 500);
+            }
+     
+
+        } 
+
     }
 
     /**
