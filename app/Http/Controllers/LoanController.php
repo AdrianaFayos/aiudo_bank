@@ -25,7 +25,50 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
+
+        if($user->id === 1){
+
+            $this->validate( $request , [
+                'account_id' => 'required',
+                'loan_money' => 'required',
+                'paid_money' => 'required',
+                'start_date' => 'required',
+                'final_date' => 'required',
+            ]);
+    
+            $loan = Loan::create ([
+    
+                'account_id' => $request -> account_id,
+                'loan_money' => $request -> loan_money,
+                'paid_money' => $request -> paid_money,
+                'start_date' => $request -> start_date,
+                'final_date' => $request -> final_date,
+
+            ]);
+    
+            if($loan){
+    
+                return response() ->json([
+                    'success' => true,
+                    'data' => $loan
+                ], 200);
+    
+            }
+    
+            return response() ->json([
+                'success' => false,
+                'message' => 'Loan could not be created',
+            ], 500);
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 
     /**
