@@ -13,8 +13,11 @@ class CreatePayment extends Migration
      */
     public function up()
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('account_id')->references('id')->on('accounts');
+            $table->foreignId('loan_id')->references('id')->on('loans');
+            $table->decimal('paid_money', 10, 2);
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreatePayment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('payments');
     }
 }
