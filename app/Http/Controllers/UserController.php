@@ -93,6 +93,50 @@ class UserController extends Controller
         //
     }
 
+    public function updatePassword(Request $request) 
+    {
+        $user = auth()->user();
+
+        if ($user->email == $request->email) {
+
+           $hash = $user->password;
+
+           if(password_verify($request->old_password, $hash)) {
+
+            $updated = $user->update([
+                'password' => bcrypt($request->new_password)
+            ]);
+
+            if($updated){
+                return response() ->json([
+                    'success' => true,
+                ]);
+            } else {
+                return response() ->json([
+                    'success' => false,
+                    'message' => 'Password could not be updated',
+                ], 500);
+            }
+
+           } else {
+               
+            return response() ->json([
+                'success' => false,
+                'message' => 'The old password is invalid',
+            ], 500);
+           }
+        
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *

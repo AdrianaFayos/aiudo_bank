@@ -29,7 +29,8 @@ Route::middleware('auth:api')->group(function(){
     // Create, update, delete or find users enpoints 
     Route::resource('users', UserController::class);
     Route::get('users/profile', [UserController::class, 'show']);
-   
+    Route::put('users/update/password', [UserController::class, 'updatePassword']);
+
     // Create, delete or find accounts enpoints 
     Route::resource('account', AccountController::class);
     Route::get('account/user', [AccountController::class, 'show']);

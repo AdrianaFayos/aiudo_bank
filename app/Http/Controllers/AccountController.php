@@ -165,7 +165,7 @@ class AccountController extends Controller
             } else {
                 return response() ->json([
                     'success' => false,
-                    'message' => 'Account can not be updated',
+                    'message' => 'Account could not be updated',
                 ], 500);
             }
      
