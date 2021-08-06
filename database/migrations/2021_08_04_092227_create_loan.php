@@ -16,6 +16,7 @@ class CreateLoan extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('account_id')->references('id')->on('accounts');
+            $table->string('description');
             $table->decimal('loan_money', 10, 2);
             $table->decimal('paid_money', 10, 2);
             $table->date('start_date');

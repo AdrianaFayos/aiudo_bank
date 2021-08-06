@@ -17,11 +17,12 @@ class CreatePayment extends Migration
             $table->id();
             $table->foreignId('account_id')->references('id')->on('accounts');
             $table->foreignId('loan_id')->references('id')->on('loans');
+            $table->string('concept');
             $table->decimal('paid_money', 10, 2);
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

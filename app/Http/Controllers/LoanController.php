@@ -50,6 +50,7 @@ class LoanController extends Controller
 
             $this->validate( $request , [
                 'account_id' => 'required',
+                'description' => 'required',
                 'loan_money' => 'required',
                 'paid_money' => 'required',
                 'start_date' => 'required',
@@ -59,6 +60,7 @@ class LoanController extends Controller
             $loan = Loan::create ([
     
                 'account_id' => $request -> account_id,
+                'description' => $request -> description,
                 'loan_money' => $request -> loan_money,
                 'paid_money' => $request -> paid_money,
                 'start_date' => $request -> start_date,
