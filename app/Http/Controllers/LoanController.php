@@ -15,7 +15,25 @@ class LoanController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        $loans = Loan::all();
+
+        if($user->id === 1){
+
+            return response() ->json([
+                'success' => true,
+                'data' => $loans,
+            ]);
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 
     /**
