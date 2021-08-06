@@ -70,7 +70,7 @@ class LoanController extends Controller
     
             if($loan){
 
-                $account = Account::where('id', '=', $request -> account_id)->get();
+                $account = Account::find($request -> account_id);
                 $total = $account->balance + $loan->loan_money ;
 
                 $updated = $account->update([
