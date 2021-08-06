@@ -50,7 +50,7 @@ class LoanController extends Controller
     
             if($loan){
 
-                $account = Account::where('id', '=', $loan->account_id)->get();
+                $account = Account::where('id', '=', $request -> account_id)->get();
                 $total = $account->balance + $loan->loan_money ;
 
                 $updated = $account->update([
@@ -70,8 +70,7 @@ class LoanController extends Controller
                         'message' => 'Loan can not be created',
                     ], 500);
                 }
-
-    
+                
             }
     
             return response() ->json([
@@ -143,8 +142,35 @@ class LoanController extends Controller
      * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Loan $loan)
+    public function destroy($id)
     {
-        //
+        $user = auth()->user();
+
+        if($user->id === 1){
+
+            $loan = Loan::where('id', '=', $id);
+
+            if($loan -> delete()) {
+                return response() ->json([
+                    'success' => true,
+                    'message' => 'Loan deleted',
+                ], 200);
+                
+            } else {
+                return response() ->json([
+                    'success' => false,
+                    'message' => 'Loan can not be deleted',
+                ], 500);
+            }
+     
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 }
