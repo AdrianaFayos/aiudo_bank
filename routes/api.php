@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PassportAuthController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,8 @@ Route::middleware('auth:api')->group(function(){
     // Create, delete or find loans enpoints 
     Route::resource('loan', LoanController::class);
     Route::get('loan/user', [LoanController::class, 'show']);
+
+     // Create, delete or find payments enpoints 
+     Route::resource('payment', PaymentController::class);
+     Route::get('payment/user', [PaymentController::class, 'show']);
 });

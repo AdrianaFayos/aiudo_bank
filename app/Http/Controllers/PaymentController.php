@@ -14,7 +14,25 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        $payments = Payment::all();
+
+        if($user->id === 1){
+
+            return response() ->json([
+                'success' => true,
+                'data' => $payments,
+            ]);
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have permision.',
+            ], 400);
+
+        }
     }
 
     /**
